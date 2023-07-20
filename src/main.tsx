@@ -1,29 +1,55 @@
-import React from "react";
-import App from "./App.tsx";
-import * as ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./error-page.tsx";
-import Contact from "./routes/contact.tsx";
-import Root, { loader as rootLoader } from "./routes/root.tsx";
-import "./index.css";
+import ReactDOM from "react-dom/client";
+import {
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+  useLoaderData,
+} from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    loader: rootLoader,
+    element: <Home />,
+    loader: loader,
     children: [
       {
-        path: "contacts/:contactId",
-        element: <Contact />,
+        path: "menu/:id",
+        element: <Menu />,
+        loader: action,
       },
     ],
   },
 ]);
 
+export default function Home() {
+  const data = useLoaderData();
+  return (
+    <>
+      <h1>Hello</h1>
+      {JSON.stringify(data)}
+      <Outlet />
+    </>
+  );
+}
+
+export function Menu() {
+  return <h2>Cardápio</h2>;
+}
+
+export async function loader() {
+  return {
+    name: "felipe",
+    age: 19,
+  };
+}
+
+export async function action() {
+  return {
+    name: "Arthur",
+    age: 15,
+  };
+}
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <RouterProvider router={router} />
 );
