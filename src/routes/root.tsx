@@ -1,18 +1,14 @@
-import { useEffect, useState } from "react";
-import { TODOS } from "./services/api";
-import type { Todo } from "./services/api";
+import { useLoaderData } from "react-router-dom";
+import { getTodos, type Todo } from "../services/api";
+
+export async function loader() {
+  const res = await getTodos();
+  return res;
+}
 
 // Função principal App
 export default function App() {
-  const [todos, setTodos] = useState<Todo[]>();
-  // Desestruturação de uma array para o gerencimento do estado da lista
-  useEffect(() => {
-    const getTodos = async () => {
-      const todo = await TODOS();
-      setTodos(todo);
-    };
-    getTodos();
-  }, []);
+  const todos = useLoaderData() as Todo[];
   return (
     <>
       <h1>App</h1>
