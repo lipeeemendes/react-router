@@ -3,7 +3,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root, { action } from "./routes/root";
 import { loader as loaderRoot } from "./routes/root";
-import User from "./routes/user";
+import Todo from "./routes/todo";
 
 const router = createBrowserRouter([
   {
@@ -13,8 +13,8 @@ const router = createBrowserRouter([
     action: action,
     children: [
       {
-        path: "users/:usersId",
-        element: <User />,
+        path: "todo/:todoId",
+        element: <Todo />,
       },
     ],
   },

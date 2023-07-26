@@ -1,0 +1,24 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+}
+
+div {
+  height: 100vh;
+  background: gray;
+}
+
+#sidebar {
+  width: 25%;
+}
+
+#details {
+  width: 75%;
+  background: white;
+}
