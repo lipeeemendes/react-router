@@ -1,9 +1,17 @@
-import { useLoaderData } from "react-router-dom";
-import { getTodos, type Todo } from "../services/api";
+import { useLoaderData, Form, ActionFunctionArgs } from "react-router-dom";
+import { getTodos, saveTodos, type Todo } from "../services/api";
 
 export async function loader() {
   const res = await getTodos();
   return res;
+}
+
+export async function action({ request }: ActionFunctionArgs) {
+  const data = await request.formData();
+  console.log(data.get("name"));
+  await saveTodos(data.get("name") as string);
+  //  const task = await createTask();
+  return null;
 }
 
 // Função principal App
@@ -21,6 +29,10 @@ export default function App() {
           <li key={todo.id}>{todo.title}</li>
         ))}
       </ul>
+      <Form method="post">
+        <input type="text" name="name" placeholder="Task" />
+        <button type="submit">New User</button>
+      </Form>
     </>
   );
 }
